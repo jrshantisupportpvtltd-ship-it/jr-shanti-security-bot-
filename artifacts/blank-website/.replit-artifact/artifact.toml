@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Blank Website"
+description = "A minimal starter website with a clean blank canvas and simple HTML, CSS, and JavaScript foundations, ready for customization."
+version = "1.0.0"
+id = "artifacts/blank-website"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23287
+
+[services.development]
+run = "pnpm --filter @workspace/blank-website run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/blank-website", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/blank-website/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23287"
+BASE_PATH = "/"
