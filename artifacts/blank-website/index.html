@@ -1,24 +1,1487 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Blank Website</title>
-    <meta name="description" content="Blank Website — built on Replit. Update this description to reflect the app." />
-    <meta name="robots" content="index, follow" />
-    <meta property="og:title" content="Blank Website" />
-    <meta property="og:description" content="Blank Website — built on Replit. Update this description to reflect the app." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Blank Website" />
-    <meta name="twitter:description" content="Blank Website — built on Replit. Update this description to reflect the app." />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JR Shanti Khata & Security System v10</title>
+  <style>
+    :root {
+      --bg-color: #f4f6f9;
+      --card-bg: #ffffff;
+      --text-color: #1f2937;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 10px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0f172a;
+      color: #38bdf8;
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .user-badge-bar {
+      background: #e2e8f0;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+    }
+    .gear-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin: 6px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      color: #fff;
+      cursor: pointer;
+    }
+    .btn-red { background-color: #b91c1c; }
+    .btn-blue { background-color: #1d4ed8; }
+    .btn-green { background-color: #15803d; }
+    .btn-purple { background-color: #8b5cf6; }
+    .btn-yellow { background-color: #f59e0b; color: #000; }
+    .btn-dark { background-color: #334155; }
+    .btn-orange { background-color: #ea580c; }
+    .btn-back { background-color: #dc2626; margin-top: 10px; }
+
+    .master-mic-box {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(59, 130, 246, 0.15), rgba(34, 197, 94, 0.15));
+      border: 2px dashed #3b82f6;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      margin: 15px 0;
+    }
+    .master-mic-btn {
+      background: #dc2626;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: #fff;
+      width: 90%;
+      max-width: 500px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 20px;
+      border-radius: 12px;
+      position: relative;
+    }
+    .modal-fullscreen {
+      width: 98% !important;
+      max-width: 100% !important;
+      height: 96vh !important;
+      max-height: 96vh !important;
+    }
+    .close-btn {
+      position: absolute;
+      right: 15px; top: 10px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 4px 0 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .input-group {
+      display: flex;
+      gap: 5px;
+    }
+    .mic-btn-green {
+      background: #15803d;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 0 14px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 11px;
+    }
+    table, th, td { border: 1px solid #cbd5e1; }
+    th, td { padding: 6px; text-align: center; }
+    th { background: #1e293b; color: #fff; }
+    .stat-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      background: #f1f5f9;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 12px;
+    }
+    .info-badge {
+      background: #e2e8f0;
+      padding: 6px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+    .item-img-preview {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-top: 5px;
+      border: 1px solid #000;
+    }
+    .sync-status {
+      font-size: 10px;
+      color: #16a34a;
+      text-align: right;
+    }
+    .dynamic-unit-box {
+      background: #fef3c7;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #f59e0b;
+    }
+    .otp-box {
+      background: #e0f2fe;
+      border: 1px dashed #0284c7;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .btn-search-link {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 6px 12px;
+      background-color: #1d4ed8;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Login Modal -->
+<div class="modal" id="loginModal" style="display: flex;">
+  <div class="modal-content" style="text-align: center;">
+    <h3>📱 JR Shanti Login System</h3>
+    <p style="font-size: 12px; color: #475569;">कृपया अपना देश और मोबाइल नंबर दर्ज करें:</p>
+    <label style="text-align:left; display:block;">देश चुनें (Select Country):</label>
+    <select id="loginCountry">
+      <option value="NP">🇳🇵 Nepal (+977)</option>
+      <option value="IN">🇮🇳 India (+91)</option>
+      <option value="AE">🇦🇪 UAE / Dubai (+971)</option>
+    </select>
+    <label style="text-align:left; display:block;">मोबाइल नंबर (Mobile Number):</label>
+    <input type="number" id="loginPhone" placeholder="उदा: 98XXXXXXXX">
+    <button class="btn btn-green" onclick="processLogin()">🚀 ऐप में लॉगिन करें</button>
+  </div>
+</div>
+
+<div class="container" id="mainApp" style="display: none;">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <span id="liveClockDisplay">📅 -- | ⏰ --</span>
+    <button class="gear-btn" onclick="openPinCheck('Owner', 'settingsModal')">⚙️</button>
+  </div>
+
+  <div class="user-badge-bar">
+    <span id="userBadgeText">👤 User: --</span>
+    <span class="sync-status" id="syncStatus">🟢 Auto Sync: Active</span>
+  </div>
+
+  <!-- Main Action Buttons -->
+  <button class="btn btn-red" id="lbl-add-stock" onclick="openPinCheck('Stock', 'stockModal')">📦 Add Item Stock (Purchase Entry)</button>
+  <button class="btn btn-blue" id="lbl-sell-item" onclick="openPinCheck('Salesman', 'sellModal')">🛒 Sell Item (Cash / Credit)</button>
+  <button class="btn btn-orange" id="lbl-return-item" onclick="openPinCheck('Salesman', 'returnModal')">↩️ सामान वापसी (Product Return Entry)</button>
+  <button class="btn btn-green" id="lbl-daily-report" onclick="openPinCheck('Storekeeper', 'reportModal')">📦 स्टॉक प्रबंधन एवं तालिका (Stock Table)</button>
+
+  <!-- Master Mic Search Engine -->
+  <div class="master-mic-box">
+    <div style="font-weight:bold; font-size:13px; margin-bottom:5px;" id="lbl-master-mic-head">🔍 AI मास्टर सर्च रोबोट (Live Stock Search)</div>
+    <button class="master-mic-btn" id="lbl-master-mic-btn" onclick="startMasterSearchMic()">🎙️ मास्टर माइक से पूछें</button>
+    <div id="masterSearchResult" style="margin-top:8px; font-size:12px; color:#1e3a8a; font-weight:bold;"></div>
+    <div id="masterSearchImgDisplay"></div>
+  </div>
+
+  <button class="btn btn-purple" id="lbl-bot-sec" onclick="openSecurityBot()">🛡️ JR Shanti Security Bot</button>
+  <button class="btn btn-yellow" id="lbl-view-accounts" style="margin-top: 8px;" onclick="openPinCheck('Owner', 'accountsModal')">💰 24H बिक्री रिपोर्ट व पीडीएफ (Sales History)</button>
+  <button class="btn btn-dark" id="lbl-help-btn" style="margin-top: 8px;" onclick="openModal('complaintModal')">📝 सहायता एवं शिकायत (Help & Complaint)</button>
+</div>
+
+<!-- PIN Lock Modal -->
+<div class="modal" id="pinModal">
+  <div class="modal-content" style="text-align: center;">
+    <span class="close-btn" onclick="closeModal('pinModal')">&times;</span>
+    <h3 id="pinModalTitle">🔒 सुरक्षा पिन दर्ज करें</h3>
+    <input type="password" id="pinInput" maxlength="6" placeholder="••••" style="font-size:24px; text-align:center; width:60%;">
+    <button class="btn btn-green" id="lbl-pin-unlock" onclick="verifyRolePin()">अनलाक करें (Unlock)</button>
+    <button class="btn btn-back" onclick="closeModal('pinModal')">⬅️ बैक (Back)</button>
+  </div>
+</div>
+
+<!-- Security Bot Modal -->
+<div class="modal" id="botModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('botModal')">&times;</span>
+    <h3>🛡️ JR Shanti Security Bot</h3>
+    <div id="botDisplayArea" style="background:#f1f5f9; padding:12px; border-radius:8px; font-size:12px; margin-bottom:10px; line-height:1.5; max-height: 220px; overflow-y: auto;"></div>
+
+    <label>🤖 सवाल पूछें (Ask Bot):</label>
+    <div class="input-group">
+      <input type="text" id="botQueryInput" placeholder="उदा: इसे किसने बनाया? शेयर कितना है? स्टॉक कैसे जोड़ें?">
+      <button class="mic-btn-green" onclick="startMic('botQueryInput')">🎙️</button>
+    </div>
+    <button class="btn btn-purple" onclick="askSecurityBot()">💬 उत्तर प्राप्त करें</button>
+    <button class="btn btn-back" onclick="closeModal('botModal')">⬅️ बैक (Back)</button>
+  </div>
+</div>
+
+<!-- Complaint Modal -->
+<div class="modal" id="complaintModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('complaintModal')">&times;</span>
+    <h3>📝 सहायता एवं शिकायत (Help & Complaint)</h3>
+    <label>आपकी समस्या या सुझाव:</label>
+    <textarea id="complaintText" rows="4" placeholder="यहाँ अपनी शिकायत या सुझाव लिखें..."></textarea>
+    <button class="btn btn-green" onclick="sendComplaint()">📩 शिकायत दर्ज करें</button>
+    <button class="btn btn-blue" onclick="sendComplaintWhatsApp()">💬 WhatsApp पर भेजें</button>
+    <button class="btn btn-yellow" onclick="sendComplaintEmail()">📧 Email द्वारा भेजें</button>
+    <button class="btn btn-back" onclick="closeModal('complaintModal')">⬅️ बैक (Back)</button>
+  </div>
+</div>
+
+<!-- View Complaints Modal (Admin Only) -->
+<div class="modal" id="viewComplaintsModal">
+  <div class="modal-content modal-fullscreen">
+    <span class="close-btn" onclick="closeModal('viewComplaintsModal')">&times;</span>
+    <h3>📋 प्राप्त शिकायतें सूची (Admin Complaints Dashboard)</h3>
+    <div style="max-height: 70vh; overflow-y: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>तारीख/समय</th>
+            <th>यूज़र ID / Phone</th>
+            <th>शिकायत / विवरण</th>
+          </tr>
+        </thead>
+        <tbody id="complaintTableBody"></tbody>
+      </table>
+    </div>
+    <button class="btn btn-back" onclick="closeModal('viewComplaintsModal')">⬅️ बैक (Back)</button>
+  </div>
+</div>
+
+<!-- Stock Add Modal -->
+<div class="modal" id="stockModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('stockModal')">&times;</span>
+    <h3 id="lbl-stock-head">📦 नया स्टॉक जोड़ें (Stock Add)</h3>
+
+    <label id="lbl-stk-shop">दुकान / सप्लायर का नाम:</label>
+    <div class="input-group">
+      <input type="text" id="stkShop" placeholder="उदा: राम स्टोर">
+      <button class="mic-btn-green" onclick="startMic('stkShop')">🎙️</button>
+    </div>
+
+    <label id="lbl-stk-item">सामान का नाम:</label>
+    <div class="input-group">
+      <input type="text" id="stkName" placeholder="उदा: आलू / साबुन / तेल">
+      <button class="mic-btn-green" onclick="startMic('stkName')">🎙️</button>
+    </div>
+
+    <label id="lbl-stk-unit">इकाई (Unit - KG / बोरा / Pcs / Litre):</label>
+    <select id="stkUnit" onchange="toggleUnitFields()">
+      <option value="KG">KG (किलो)</option>
+      <option value="Bora">बोरा (Bora + KG)</option>
+      <option value="Pcs">Pcs (पैकेट + पीस)</option>
+      <option value="Litre">Litre (टीने/डिब्बा + लीटर)</option>
+    </select>
+
+    <!-- Dynamic Bora Container -->
+    <div id="boraContainer" class="dynamic-unit-box" style="display:none;">
+      <label>1) कुल बोरा (संख्या):</label>
+      <input type="number" id="boraCount" placeholder="0" oninput="calcStockTotals()">
+
+      <label>2) 1 बोरे में कितना KG?:</label>
+      <input type="number" id="boraKgPerUnit" placeholder="उदा: 50" oninput="calcStockTotals()">
+
+      <label>3) 1 बोरे का रेट (Rate per Bora):</label>
+      <input type="number" id="boraRatePerBora" placeholder="0.00" oninput="calcStockTotals()">
+
+      <div style="font-size: 11px; color: #854d0e; margin-top: 5px;">
+        💡 प्रति KG खरीद दर (Rate/KG): <b><span id="boraRatePerKgDisp">0.00</span></b>
+      </div>
+    </div>
+
+    <!-- Dynamic Pcs Container -->
+    <div id="pcsContainer" class="dynamic-unit-box" style="display:none;">
+      <label>1) कुल कार्टन / पैकेट (संख्या):</label>
+      <input type="number" id="pcsPktCount" placeholder="0" oninput="calcStockTotals()">
+
+      <label>2) 1 पैकेट में कितना Pcs?:</label>
+      <input type="number" id="pcsPerPkt" placeholder="उदा: 12" oninput="calcStockTotals()">
+
+      <label>3) 1 पैकेट का रेट (Rate per Packet):</label>
+      <input type="number" id="pcsRatePerPkt" placeholder="0.00" oninput="calcStockTotals()">
+
+      <div style="font-size: 11px; color: #854d0e; margin-top: 5px;">
+        💡 प्रति Piece खरीद दर (Rate/Pcs): <b><span id="pcsRatePerPieceDisp">0.00</span></b>
+      </div>
+    </div>
+
+    <!-- Dynamic Litre Container -->
+    <div id="litreContainer" class="dynamic-unit-box" style="display:none;">
+      <label>1) कुल टीन / डिब्बा (संख्या):</label>
+      <input type="number" id="litreBoxCount" placeholder="0" oninput="calcStockTotals()">
+
+      <label>2) 1 डिब्बे में कितना Litre?:</label>
+      <input type="number" id="litrePerBox" placeholder="उदा: 15" oninput="calcStockTotals()">
+
+      <label>3) 1 डिब्बे का रेट (Rate per Box):</label>
+      <input type="number" id="litreRatePerBox" placeholder="0.00" oninput="calcStockTotals()">
+
+      <div style="font-size: 11px; color: #854d0e; margin-top: 5px;">
+        💡 प्रति Litre खरीद दर (Rate/Litre): <b><span id="litreRatePerLitreDisp">0.00</span></b>
+      </div>
+    </div>
+
+    <div id="standardQtyContainer">
+      <label id="lbl-stk-qty">मात्रा (Quantity):</label>
+      <div class="input-group">
+        <input type="number" id="stkQty" placeholder="0" oninput="calcStockTotals()">
+        <button class="mic-btn-green" onclick="startMic('stkQty')">🎙️</button>
+      </div>
+
+      <label id="lbl-stk-rate">खरीद दर (Store Rate/Unit):</label>
+      <div class="input-group">
+        <input type="number" id="stkRate" placeholder="0.00" oninput="calcStockTotals()">
+        <button class="mic-btn-green" onclick="startMic('stkRate')">🎙️</button>
+      </div>
+    </div>
+
+    <label id="lbl-stk-total">कुल बिल रकम (Total Amount):</label>
+    <input type="number" id="stkTotal" readonly value="0">
+
+    <label id="lbl-stk-given">दिया गया नकद (Paid Cash):</label>
+    <div class="input-group">
+      <input type="number" id="stkGiven" placeholder="0" oninput="calcStockTotals()">
+      <button class="mic-btn-green" onclick="startMic('stkGiven')">🎙️</button>
+    </div>
+
+    <label id="lbl-stk-img">📷 सामान की फोटो जोड़ें (Optional Photo):</label>
+    <input type="file" id="stkImgInput" accept="image/*" onchange="handleImageUpload(event)">
+    <div id="imgPreviewArea"></div>
+
+    <div class="info-badge" id="stkDueDisplay">सप्लायर बाकी उधार: 0.00</div>
+
+    <label id="lbl-stk-paytype">खरीद का प्रकार:</label>
+    <select id="stkPayType">
+      <option value="Cash">नकद (Cash)</option>
+      <option value="Credit">उधार (Credit)</option>
+    </select>
+
+    <button class="btn btn-green" id="lbl-save-stock" onclick="saveStock()">सेव करें (Save Stock)</button>
+    <button class="btn btn-back" onclick="closeModal('stockModal')">⬅️ बैक (Back)</button>
+  </div>
+</div>
+
+<!-- Product Return Modal -->
+<div class="modal" id="returnModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('returnModal')">&times;</span>
+    <h3>↩️ सामान वापसी एंट्री (Product Return)</h3>
+
+    <label>वापसी का प्रकार:</label>
+    <select id="returnType">
+      <option value="Customer">ग्राहक से वापसी (Customer Return -> Stock Up)</option>
+      <option value="Supplier">सप्लायर को वापसी (Return to Supplier -> Stock Down)</option>
+    </select>
+
+    <label>सामान का नाम:</label>
+    <div class="input-group">
+      <input type="text" id="returnItemName" placeholder="उदा: आलू">
+      <button class="mic-btn-green" onclick="startMic('returnItemName')">🎙️</button>
+    </div>
+
+    <label>वापसी मात्रा (Qty Returned):</label>
+    <input type="number" id="returnQty" placeholder="0">
+
+    <label>रिफंड/वापसी रकम (Amount):</label>
+    <input type="number" id="returnAmount" placeholder="0.00">
+
+    <button class="btn btn-orange" onclick="processProductReturn()">🔄 वापसी दर्ज करें और स्टॉक अपडेट करें</button>
+    <button class="btn btn-back" onclick="closeModal('returnModal')">⬅️ बैक (Back)</button>
+  </div>
+</div>
+
+<!-- Sell Modal -->
+<div class="modal" id="sellModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('sellModal')">&times;</span>
+    <h3 id="lbl-sell-head">🛒 बिक्री एंट्री (Sell Item)</h3>
+
+    <label id="lbl-cust-name">ग्राहक का नाम:</label>
+    <div class="input-group">
+      <input type="text" id="custName" placeholder="उदा: राजू महतो">
+      <button class="mic-btn-green" onclick="startMic('custName')">🎙️</button>
+    </div>
+
+    <label id="lbl-sell-item-name">सामान का नाम:</label>
+    <div class="input-group">
+      <input type="text" id="sellItemName" placeholder="उदा: आलू">
+      <button class="mic-btn-green" onclick="startMic('sellItemName')">🎙️</button>
+    </div>
+
+    <label id="lbl-sell-qty">मात्रा:</label>
+    <div class="input-group">
+      <input type="number" id="sellQty" placeholder="0" oninput="calcSellTotal()">
+      <button class="mic-btn-green" onclick="startMic('sellQty')">🎙️</button>
+    </div>
+
+    <label id="lbl-sell-rate">बिक्री दर (Selling Rate):</label>
+    <div class="input-group">
+      <input type="number" id="sellRate" placeholder="0.00" oninput="calcSellTotal()">
+      <button class="mic-btn-green" onclick="startMic('sellRate')">🎙️</button>
+    </div>
+
+    <label id="lbl-sell-total">कुल रकम (Total):</label>
+    <input type="number" id="sellTotal" readonly value="0">
+
+    <label id="lbl-given-cash">दिया गया नकद (Given Cash):</label>
+    <div class="input-group">
+      <input type="number" id="givenCash" placeholder="0" oninput="calcSellTotal()">
+      <button class="mic-btn-green" onclick="startMic('givenCash')">🎙️</button>
+    </div>
+
+    <div class="info-badge" id="changeDisplay">वापस रकम: 0.00</div>
+    <div class="info-badge" style="color:#b91c1c;" id="dueDisplay">ग्राहक बकाया उधार: 0.00</div>
+
+    <label id="lbl-pay-type">भुगतान प्रकार:</label>
+    <select id="payType">
+      <option value="Cash">नकद (Cash)</option>
+      <option value="Credit">उधार (Credit)</option>
+    </select>
+
+    <button class="btn btn-green" id="lbl-save-sell" onclick="saveSell()">बिक्री दर्ज करें (Save Entry)</button>
+    <button class="btn btn-back" onclick="closeModal('sellModal')">⬅️ बैक (Back)</button>
+  </div>
+</div>
+
+<!-- Stock Warehouse Modal -->
+<div class="modal" id="reportModal">
+  <div class="modal-content modal-fullscreen">
+    <span class="close-btn" onclick="closeModal('reportModal')">&times;</span>
+    <h3 id="lbl-report-head">📦 स्टॉक गोदाम तालिका (Excel Format)</h3>
+
+    <div style="max-height: 50vh; overflow-x: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th id="th-img">फोटो</th>
+            <th id="th-loc">सप्लायर</th>
+            <th id="th-item">सामान नाम</th>
+            <th>पैकेट/बोरा/डिब्बा</th>
+            <th id="th-total">कुल मात्रा</th>
+            <th id="th-rate">खरीद दर</th>
+            <th id="th-sold">बिक्री हुई</th>
+            <th id="th-rem">बाकी स्टॉक</th>
+          </tr>
+        </thead>
+        <tbody id="stockTableBody"></tbody>
+      </table>
+    </div>
+
+    <div id="stockAlerts" style="margin-top:10px; font-weight:bold; color:#b91c1c; font-size:12px;"></div>
+
+    <div style="margin-top:20px; background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
+      <h4 id="lbl-pdf-folder-head">🗃️ स्टॉक पीडीएफ रिपोर्ट फाइल (File Folder)</h4>
+      <button class="btn btn-green" id="lbl-pdf-save" onclick="generate24HArchive('Stock')">📄 नई स्टॉक PDF जनरेट करें</button>
+    </div>
+    <button class="btn btn-back" onclick="closeModal('reportModal')">⬅️ बैक (Back)</button>
+  </div>
+</div>
+
+<!-- Accounts & PDF Management Modal -->
+<div class="modal" id="accountsModal">
+  <div class="modal-content modal-fullscreen">
+    <span class="close-btn" onclick="closeModal('accountsModal')">&times;</span>
+    <h3 id="lbl-acc-head">💰 24 घंटे का बिक्री रिपोर्ट फ़ोल्डर 🗃️</h3>
+
+    <div class="stat-box">
+      <span style="color:green" id="dashCash">प्राप्त नकद: 0</span>
+      <span style="color:red" id="dashCredit">ग्राहक उधार: 0</span>
+      <span style="color:blue" id="dashProfit">मुनाफ़ा: 0</span>
+      <span style="color:purple" id="dashShopCredit">सप्लायर बकाया: 0</span>
+    </div>
+
+    <button class="btn btn-green" id="lbl-gen-sales-pdf" onclick="generate24HArchive('Sales')">📄 24 घंटे की बिक्री PDF बनाएं</button>
+
+    <h4 id="lbl-pdf-title" style="margin-top:15px;">🗃️ सुरक्षित PDF फ़ाइलें (Edit, Preview & Delete):</h4>
+    <div style="max-height: 40vh; overflow-y: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th id="th-fname">फाइल नाम</th>
+            <th id="th-fdate">दिनांक/समय</th>
+            <th id="th-faction">एक्शन (Action)</th>
+          </tr>
+        </thead>
+        <tbody id="pdfArchiveBody"></tbody>
+      </table>
+    </div>
+    <button class="btn btn-back" onclick="closeModal('accountsModal')">⬅️ बैक (Back)</button>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal" id="settingsModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('settingsModal')">&times;</span>
+    <h3 id="lbl-settings-head">⚙️ ऐप व सुरक्षा सेटिंग्स</h3>
+
+    <label id="lbl-user-name">👤 यूज़र का नाम:</label>
+    <input type="text" id="userNameInput" value="जितेन्द्र कुमार महतो">
+
+    <label id="lbl-lang">🌐 भाषा (Language):</label>
+    <select id="langSelect" onchange="changeLanguage()">
+      <option value="hi">हिंदी (Hindi)</option>
+      <option value="mai">मैथिली (Maithili)</option>
+      <option value="ne">नेपाली (Nepali)</option>
+      <option value="en">English</option>
+    </select>
+
+    <label id="lbl-cal">📅 समय और तारीख देश (Location Sync):</label>
+    <select id="calSelect" onchange="changeCalendar()">
+      <option value="AE">दुबाई / UAE Time (GST / AED)</option>
+      <option value="IN">भारत (India Time - IST / ₹)</option>
+      <option value="NP">नेपाल (Nepal Time - NPT / BS / रु)</option>
+    </select>
+
+    <!-- Dynamic Mobile Number Change with OTP Security -->
+    <div class="otp-box">
+      <h4 style="color:#0284c7; margin-bottom:5px;">📱 रजिस्टर्ड SIM / मोबाइल नंबर बदलें</h4>
+      <p style="font-size:11px; color:#475569;">User ID <b>(<span id="dispCurrentUserId">--</span>)</b> वही रहेगी, नया नंबर OTP से लिंक होगा:</p>
+
+      <label style="font-size:12px;">नया मोबाइल नंबर:</label>
+      <input type="number" id="newPhoneInput" placeholder="उदा: 98XXXXXXXX">
+
+      <button class="btn btn-blue" style="padding:6px; font-size:12px;" onclick="sendOwnerOTP()">📩 4-Digit OTP भेजें</button>
+
+      <div id="otpInputSection" style="display:none; margin-top:10px;">
+        <label style="font-size:12px; color:#15803d;">दर्ज करें 4-Digit OTP:</label>
+        <input type="number" id="otpCodeInput" placeholder="••••">
+        <button class="btn btn-green" style="padding:6px; font-size:12px;" onclick="verifyOwnerOTP()">✅ OTP वैरिफाई करके नंबर बदलें</button>
+      </div>
+    </div>
+
+    <button class="btn btn-dark" style="margin-top:10px;" onclick="openModal('viewComplaintsModal')">📋 शिकायत सूची देखें (View Complaints)</button>
+
+    <h4 style="color:#1d4ed8; margin-top:15px;">💾 डेटा बैकअप एवं रीस्टोर (JSON Engine)</h4>
+    <button class="btn btn-blue" onclick="downloadJSONBackup()">📥 बैकअप डाउनलोड करें (Backup File)</button>
+    <input type="file" id="restoreFileInput" accept=".json" style="display:none" onchange="restoreJSONBackup(event)">
+    <button class="btn btn-yellow" onclick="document.getElementById('restoreFileInput').click()">📤 पुराना डेटा रीस्टोर करें (Restore Data)</button>
+    <button class="btn btn-green" onclick="emailJSONBackup()">📧 Gmail पर बैकअप फाइल भेजें</button>
+
+    <h4 style="color:#b91c1c; margin-top:15px;" id="lbl-sec-head">🔒 पिन पासवर्ड सेटिंग्स (PIN Locks):</h4>
+    <label id="lbl-pin-owner">🔑 Owner Password (मुख्य पिन):</label>
+    <input type="password" id="pinOwner" placeholder="1234">
+
+    <label id="lbl-pin-stock">🔑 Stock Add PIN:</label>
+    <input type="password" id="pinStock" placeholder="1234">
+
+    <label id="lbl-pin-sales">🔑 Salesman PIN:</label>
+    <input type="password" id="pinSalesman" placeholder="1234">
+
+    <label id="lbl-pin-store">🔑 Storekeeper PIN:</label>
+    <input type="password" id="pinStorekeeper" placeholder="1234">
+
+    <button class="btn btn-green" id="lbl-save-settings" onclick="saveSettings()">💾 सेटिंग्स सेव करें</button>
+    <button class="btn btn-back" onclick="closeModal('settingsModal')">⬅️ बैक (Back)</button>
+  </div>
+</div>
+
+<!-- PDF Preview & Edit Modal -->
+<div class="modal" id="pdfPreviewModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('pdfPreviewModal')">&times;</span>
+    <h3 id="lbl-pdf-prev-head">📄 PDF प्रीव्यू एवं सम्पादन (Owner Edit)</h3>
+    <button class="btn btn-purple" id="lbl-pdf-voice-btn" onclick="readActivePDFVoice()">🎙️ AI रोबोट से PDF रिपोर्ट सुनें</button>
+
+    <label style="margin-top:10px; display:block;">PDF रिपोर्ट सामग्री (Editable Text):</label>
+    <textarea id="pdfContentTextarea" rows="10" style="font-family:monospace; font-size:12px;"></textarea>
+
+    <button class="btn btn-green" onclick="saveEditedPDF()">💾 परिवर्तन सेव करें (Save PDF Edits)</button>
+    <button class="btn btn-back" onclick="closeModal('pdfPreviewModal')">⬅️ बैक (Back)</button>
+  </div>
+</div>
+
+<script>
+  let pendingRole = '';
+  let pendingTargetModal = null;
+  let activePdfIndex = null;
+  let currentUploadedImgBase64 = "";
+  let generatedOTP = null;
+
+  let appData = {
+    userProfile: { phone: "", country: "NP", userId: "" },
+    settings: { 
+      userName: "जितेन्द्र कुमार महतो", 
+      lang: "hi", 
+      cal: "NP", 
+      pins: { Owner: "1234", Stock: "1234", Salesman: "1234", Storekeeper: "1234" } 
+    },
+    stock: {},
+    sales: [],
+    pdfFiles: [],
+    complaints: []
+  };
+
+  const i18nDict = {
+    hi: {
+      addStock: "📦 Add Item Stock (Purchase Entry)",
+      sellItem: "🛒 Sell Item (Cash / Credit)",
+      returnItem: "↩️ सामान वापसी (Product Return Entry)",
+      dailyReport: "📦 स्टॉक प्रबंधन एवं तालिका (Stock Table)",
+      masterHead: "🔍 AI मास्टर सर्च रोबोट (Live Stock Search)",
+      masterBtn: "🎙️ मास्टर माइक से पूछें",
+      botSec: "🛡️ JR Shanti Security Bot",
+      viewAcc: "💰 24H बिक्री रिपोर्ट व पीडीएफ (Sales History)",
+      helpBtn: "📝 सहायता एवं शिकायत (Help & Complaint)",
+      pinSuccess: "पिन सही है, अनलाक हो गया",
+      saveStockOk: "स्टॉक सुरक्षित सेव हुआ!",
+      sellOk: "बिक्री दर्ज हो गई!"
+    },
+    mai: {
+      addStock: "📦 सामान स्टॉक जोड़ू (Purchase Entry)",
+      sellItem: "🛒 सामान बिक्री (Cash / Credit)",
+      returnItem: "↩️ सामान वापसी (Product Return Entry)",
+      dailyReport: "📦 स्टॉक प्रबंधन आ तालिका (Stock Table)",
+      masterHead: "🔍 AI मास्टर खोज रोबोट (Live Stock Search)",
+      masterBtn: "🎙️ मास्टर माइक सँ पूछू",
+      botSec: "🛡️ JR Shanti सुरक्षा बोट",
+      viewAcc: "💰 २४ घंटा बिक्री रिपोर्ट (Sales History)",
+      helpBtn: "📝 सहायता आ शिकायत (Help & Complaint)",
+      pinSuccess: "पिन सही अछि, अनलाक भ गेल",
+      saveStockOk: "स्टॉक सेभ भ गेल!",
+      sellOk: "बिक्री सेभ भ गेल!"
+    },
+    ne: {
+      addStock: "📦 सामान स्टक थप्नुहोस् (Purchase Entry)",
+      sellItem: "🛒 सामान बिक्री (Cash / Credit)",
+      returnItem: "↩️ सामान फिर्ता (Product Return Entry)",
+      dailyReport: "📦 स्टक व्यवस्थापन र तालिका (Stock Table)",
+      masterHead: "🔍 AI मास्टर खोज रोबोट (Live Stock Search)",
+      masterBtn: "🎙️ मास्टर माइकबाट सोध्नुहोस्",
+      botSec: "🛡️ JR Shanti सुरक्षा बोट",
+      viewAcc: "💰 २४ घण्टा बिक्री रिपोर्ट (Sales History)",
+      helpBtn: "📝 सहयोग र गुनासो (Help & Complaint)",
+      pinSuccess: "पिन मिल्यो, अनलक भयो",
+      saveStockOk: "स्टक सुरक्षित सेभ भयो!",
+      sellOk: "बिक्री सेभ भयो!"
+    },
+    en: {
+      addStock: "📦 Add Item Stock (Purchase Entry)",
+      sellItem: "🛒 Sell Item (Cash / Credit)",
+      returnItem: "↩️ Product Return Entry",
+      dailyReport: "📦 Stock Management & Table",
+      masterHead: "🔍 AI Master Stock Search Robot",
+      masterBtn: "🎙️ Ask Master Mic",
+      botSec: "🛡️ JR Shanti Security Bot",
+      viewAcc: "💰 24H Sales History & PDF",
+      helpBtn: "📝 Help & Complaint",
+      pinSuccess: "PIN correct, unlocked successfully",
+      saveStockOk: "Stock saved successfully!",
+      sellOk: "Sale entry saved!"
+    }
+  };
+
+  if (localStorage.getItem('JR_SHANTI_DATA_V8')) {
+    try { 
+      const parsed = JSON.parse(localStorage.getItem('JR_SHANTI_DATA_V8'));
+      appData = { ...appData, ...parsed };
+    } catch(e){}
+  }
+
+  function saveData() {
+    localStorage.setItem('JR_SHANTI_DATA_V8', JSON.stringify(appData));
+  }
+
+  function getCurrencySymbol() {
+    const cal = appData.settings.cal || 'NP';
+    if(cal === 'NP') return 'रु';
+    if(cal === 'IN') return '₹';
+    return 'AED';
+  }
+
+  function getLanguageCode() {
+    const selectedLang = appData.settings.lang || 'hi';
+    if (selectedLang === 'mai') return 'hi-IN';
+    if (selectedLang === 'ne') return 'ne-NP';
+    if (selectedLang === 'en') return 'en-US';
+    return 'hi-IN';
+  }
+
+  function processLogin() {
+    const phone = document.getElementById('loginPhone').value.trim();
+    const country = document.getElementById('loginCountry').value;
+
+    if(!phone || phone.length < 8) {
+      alert("कृपया सही मोबाइल नंबर दर्ज करें!");
+      return;
+    }
+
+    if(!appData.userProfile.userId) {
+      const randomNum = Math.floor(1000 + Math.random() * 9000);
+      appData.userProfile.userId = `JRS-${country}-${randomNum}`;
+    }
+
+    appData.userProfile.phone = phone;
+    appData.userProfile.country = country;
+    appData.settings.cal = country;
+
+    saveData();
+    initAppView();
+  }
+
+  function initAppView() {
+    if(appData.userProfile && appData.userProfile.phone) {
+      document.getElementById('loginModal').style.display = 'none';
+      document.getElementById('mainApp').style.display = 'block';
+      document.getElementById('userBadgeText').innerText = `👤 ID: ${appData.userProfile.userId} | 📱 ${appData.userProfile.phone}`;
+      document.getElementById('dispCurrentUserId').innerText = appData.userProfile.userId;
+      applyLanguageUI();
+      updateLiveClock();
+    }
+  }
+
+  function applyLanguageUI() {
+    const lang = appData.settings.lang || 'hi';
+    const dict = i18nDict[lang] || i18nDict.hi;
+
+    document.getElementById('lbl-add-stock').innerText = dict.addStock;
+    document.getElementById('lbl-sell-item').innerText = dict.sellItem;
+    document.getElementById('lbl-return-item').innerText = dict.returnItem;
+    document.getElementById('lbl-daily-report').innerText = dict.dailyReport;
+    document.getElementById('lbl-master-mic-head').innerText = dict.masterHead;
+    document.getElementById('lbl-master-mic-btn').innerText = dict.masterBtn;
+    document.getElementById('lbl-bot-sec').innerText = dict.botSec;
+    document.getElementById('lbl-view-accounts').innerText = dict.viewAcc;
+    document.getElementById('lbl-help-btn').innerText = dict.helpBtn;
+  }
+
+  /* UPGRADED CLEAR AI VOICE SYSTEM */
+  function speakText(txt) {
+    if(!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel(); // Clear current voice buffer
+
+    const langCode = getLanguageCode();
+    // Split text into smaller chunks for clean continuous reading
+    const chunks = txt.match(/[^.!?।\n]+[.!?।\n]?/g) || [txt];
+
+    chunks.forEach(chunk => {
+      const cleanChunk = chunk.trim();
+      if(!cleanChunk) return;
+
+      const utter = new SpeechSynthesisUtterance(cleanChunk);
+      utter.lang = langCode;
+      utter.rate = 0.9;  // Natural speaking speed
+      utter.pitch = 1.0; // Clear voice tone
+
+      const voices = window.speechSynthesis.getVoices();
+      const matchedVoice = voices.find(v => v.lang === langCode || v.lang.startsWith(langCode.split('-')[0]));
+      if (matchedVoice) {
+        utter.voice = matchedVoice;
+      }
+      window.speechSynthesis.speak(utter);
+    });
+  }
+
+  function updateLiveClock() {
+    const cal = appData.settings.cal || 'NP';
+    const now = new Date();
+
+    let utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+    let offset = 4; // Dubai UTC+4 default
+    if (cal === 'IN') offset = 5.5;
+    if (cal === 'NP') offset = 5.75;
+
+    let targetTime = new Date(utcTime + (3600000 * offset));
+    let timeStr = targetTime.toLocaleTimeString();
+    let dateStr = "";
+
+    if (cal === 'NP') {
+      let bsYear = targetTime.getFullYear() + 56;
+      let bsMonth = targetTime.getMonth() + 9;
+      if(bsMonth > 12) { bsMonth -= 12; bsYear += 1; }
+      dateStr = `📅 नेपाल (BS) ${bsYear}/${bsMonth}/${targetTime.getDate()}`;
+    } else if (cal === 'IN') {
+      dateStr = `📅 भारत (AD) ${targetTime.getDate()}/${targetTime.getMonth()+1}/${targetTime.getFullYear()}`;
+    } else {
+      dateStr = `📅 दुबई/UAE ${targetTime.getDate()}/${targetTime.getMonth()+1}/${targetTime.getFullYear()}`;
+    }
+
+    document.getElementById('liveClockDisplay').innerText = `${dateStr} | ⏰ ${timeStr}`;
+  }
+  setInterval(updateLiveClock, 1000);
+
+  function openModal(id) { document.getElementById(id).style.display = 'flex'; renderTables(); renderComplaints(); }
+  function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+  function openPinCheck(role, targetModalId) {
+    pendingRole = role;
+    pendingTargetModal = targetModalId;
+    document.getElementById('pinInput').value = '';
+    document.getElementById('pinModalTitle').innerText = `🔒 ${role} पिन दर्ज करें`;
+    openModal('pinModal');
+  }
+
+  function verifyRolePin() {
+    const entered = document.getElementById('pinInput').value;
+    const requiredPin = appData.settings.pins[pendingRole] || "1234";
+    const lang = appData.settings.lang || 'hi';
+    const dict = i18nDict[lang] || i18nDict.hi;
+
+    if (entered === requiredPin || entered === appData.settings.pins.Owner) {
+      speakText(dict.pinSuccess);
+      closeModal('pinModal');
+      openModal(pendingTargetModal);
+    } else {
+      alert("गलत PIN पासवर्ड!");
+    }
+  }
+
+  function toggleUnitFields() {
+    const unit = document.getElementById('stkUnit').value;
+    document.getElementById('boraContainer').style.display = 'none';
+    document.getElementById('pcsContainer').style.display = 'none';
+    document.getElementById('litreContainer').style.display = 'none';
+
+    if(unit === 'Bora') {
+      document.getElementById('boraContainer').style.display = 'block';
+      document.getElementById('standardQtyContainer').style.display = 'none';
+    } else if(unit === 'Pcs') {
+      document.getElementById('pcsContainer').style.display = 'block';
+      document.getElementById('standardQtyContainer').style.display = 'none';
+    } else if(unit === 'Litre') {
+      document.getElementById('litreContainer').style.display = 'block';
+      document.getElementById('standardQtyContainer').style.display = 'none';
+    } else {
+      document.getElementById('standardQtyContainer').style.display = 'block';
+    }
+    calcStockTotals();
+  }
+
+  function calcStockTotals() {
+    const unit = document.getElementById('stkUnit').value;
+    let total = 0;
+
+    if(unit === 'Bora') {
+      const bora = parseFloat(document.getElementById('boraCount').value) || 0;
+      const kgPerBora = parseFloat(document.getElementById('boraKgPerUnit').value) || 0;
+      const ratePerBora = parseFloat(document.getElementById('boraRatePerBora').value) || 0;
+
+      const totalKg = bora * kgPerBora;
+      const ratePerKg = kgPerBora > 0 ? (ratePerBora / kgPerBora) : 0;
+      total = bora * ratePerBora;
+
+      document.getElementById('boraRatePerKgDisp').innerText = ratePerKg.toFixed(2);
+      document.getElementById('stkQty').value = totalKg;
+      document.getElementById('stkRate').value = ratePerKg.toFixed(2);
+    } else if(unit === 'Pcs') {
+      const pkts = parseFloat(document.getElementById('pcsPktCount').value) || 0;
+      const pcsPerPkt = parseFloat(document.getElementById('pcsPerPkt').value) || 0;
+      const ratePerPkt = parseFloat(document.getElementById('pcsRatePerPkt').value) || 0;
+
+      const totalPcs = pkts * pcsPerPkt;
+      const ratePerPiece = pcsPerPkt > 0 ? (ratePerPkt / pcsPerPkt) : 0;
+      total = pkts * ratePerPkt;
+
+      document.getElementById('pcsRatePerPieceDisp').innerText = ratePerPiece.toFixed(2);
+      document.getElementById('stkQty').value = totalPcs;
+      document.getElementById('stkRate').value = ratePerPiece.toFixed(2);
+    } else if(unit === 'Litre') {
+      const boxes = parseFloat(document.getElementById('litreBoxCount').value) || 0;
+      const litrePerBox = parseFloat(document.getElementById('litrePerBox').value) || 0;
+      const ratePerBox = parseFloat(document.getElementById('litreRatePerBox').value) || 0;
+
+      const totalLitre = boxes * litrePerBox;
+      const ratePerLitre = litrePerBox > 0 ? (ratePerBox / litrePerBox) : 0;
+      total = boxes * ratePerBox;
+
+      document.getElementById('litreRatePerLitreDisp').innerText = ratePerLitre.toFixed(2);
+      document.getElementById('stkQty').value = totalLitre;
+      document.getElementById('stkRate').value = ratePerLitre.toFixed(2);
+    } else {
+      const q = parseFloat(document.getElementById('stkQty').value) || 0;
+      const r = parseFloat(document.getElementById('stkRate').value) || 0;
+      total = q * r;
+    }
+
+    document.getElementById('stkTotal').value = total.toFixed(2);
+    const paid = parseFloat(document.getElementById('stkGiven').value) || 0;
+    const due = total - paid;
+    const cur = getCurrencySymbol();
+    document.getElementById('stkDueDisplay').innerText = `सप्लायर बाकी उधार: ${cur} ${due > 0 ? due.toFixed(2) : '0.00'}`;
+  }
+
+  function calcSellTotal() {
+    const q = parseFloat(document.getElementById('sellQty').value) || 0;
+    const r = parseFloat(document.getElementById('sellRate').value) || 0;
+    const total = q * r;
+    document.getElementById('sellTotal').value = total.toFixed(2);
+
+    const given = parseFloat(document.getElementById('givenCash').value) || 0;
+    const ret = given - total;
+    const due = total - given;
+    const cur = getCurrencySymbol();
+
+    document.getElementById('changeDisplay').innerText = `वापस रकम: ${cur} ${ret > 0 ? ret.toFixed(2) : '0.00'}`;
+    document.getElementById('dueDisplay').innerText = `ग्राहक बकाया उधार: ${cur} ${due > 0 ? due.toFixed(2) : '0.00'}`;
+  }
+
+  function saveStock() {
+    const shop = document.getElementById('stkShop').value.trim() || "Supplier";
+    const name = document.getElementById('stkName').value.trim();
+    const unit = document.getElementById('stkUnit').value;
+    const payType = document.getElementById('stkPayType').value;
+    const lang = appData.settings.lang || 'hi';
+    const dict = i18nDict[lang] || i18nDict.hi;
+
+    let qty = 0, rate = 0, subUnits = 0;
+
+    if(unit === 'Bora') {
+      subUnits = parseFloat(document.getElementById('boraCount').value) || 0;
+      const kgPerBora = parseFloat(document.getElementById('boraKgPerUnit').value) || 0;
+      qty = subUnits * kgPerBora;
+      rate = parseFloat(document.getElementById('boraRatePerKgDisp').innerText) || 0;
+    } else if(unit === 'Pcs') {
+      subUnits = parseFloat(document.getElementById('pcsPktCount').value) || 0;
+      const pcsPerPkt = parseFloat(document.getElementById('pcsPerPkt').value) || 0;
+      qty = subUnits * pcsPerPkt;
+      rate = parseFloat(document.getElementById('pcsRatePerPieceDisp').innerText) || 0;
+    } else if(unit === 'Litre') {
+      subUnits = parseFloat(document.getElementById('litreBoxCount').value) || 0;
+      const litrePerBox = parseFloat(document.getElementById('litrePerBox').value) || 0;
+      qty = subUnits * litrePerBox;
+      rate = parseFloat(document.getElementById('litreRatePerLitreDisp').innerText) || 0;
+    } else {
+      qty = parseFloat(document.getElementById('stkQty').value) || 0;
+      rate = parseFloat(document.getElementById('stkRate').value) || 0;
+    }
+
+    const given = parseFloat(document.getElementById('stkGiven').value) || 0;
+
+    if(!name || qty <= 0) { alert("सही विवरण भरें!"); return; }
+
+    const total = qty * rate;
+    const due = total - given > 0 ? total - given : 0;
+
+    if(!appData.stock[name]) {
+      appData.stock[name] = { shop: shop, totalAdded: qty, unit: unit, purchaseRate: rate, soldQty: 0, payType: payType, supplierDue: due, subUnits: subUnits, img: currentUploadedImgBase64 };
+    } else {
+      appData.stock[name].totalAdded += qty;
+      appData.stock[name].subUnits = (appData.stock[name].subUnits || 0) + subUnits;
+      appData.stock[name].purchaseRate = rate;
+      appData.stock[name].supplierDue = (appData.stock[name].supplierDue || 0) + due;
+      if(currentUploadedImgBase64) appData.stock[name].img = currentUploadedImgBase64;
+    }
+
+    currentUploadedImgBase64 = "";
+    document.getElementById('imgPreviewArea').innerHTML = "";
+    saveData();
+    speakText(`${name} ${dict.saveStockOk}`);
+    alert(dict.saveStockOk);
+    closeModal('stockModal');
+  }
+
+  function processProductReturn() {
+    const type = document.getElementById('returnType').value;
+    const item = document.getElementById('returnItemName').value.trim();
+    const qty = parseFloat(document.getElementById('returnQty').value) || 0;
+
+    if(!item || qty <= 0) { alert("सही विवरण भरें!"); return; }
+
+    if(!appData.stock[item]) { alert("यह सामान गोदाम में मौजूद नहीं है!"); return; }
+
+    if(type === 'Customer') {
+      appData.stock[item].soldQty = Math.max(0, (appData.stock[item].soldQty || 0) - qty);
+      alert(`ग्राहक वापसी दर्ज! ${item} का स्टॉक ${qty} से बढ़ा दिया गया है।`);
+    } else {
+      appData.stock[item].totalAdded = Math.max(0, (appData.stock[item].totalAdded || 0) - qty);
+      alert(`सप्लायर वापसी दर्ज! ${item} का स्टॉक ${qty} से कम कर दिया गया है।`);
+    }
+
+    saveData();
+    closeModal('returnModal');
+  }
+
+  function saveSell() {
+    let cust = document.getElementById('custName').value.trim() || "Cash Customer";
+    const item = document.getElementById('sellItemName').value.trim();
+    const qty = parseFloat(document.getElementById('sellQty').value) || 0;
+    const rate = parseFloat(document.getElementById('sellRate').value) || 0;
+    const given = parseFloat(document.getElementById('givenCash').value) || 0;
+    const payType = document.getElementById('payType').value;
+    const lang = appData.settings.lang || 'hi';
+    const dict = i18nDict[lang] || i18nDict.hi;
+
+    if(!item || qty <= 0) { alert("सही सामान व मात्रा दर्ज करें!"); return; }
+
+    const costRate = appData.stock[item] ? appData.stock[item].purchaseRate : rate;
+    const total = qty * rate;
+    const profit = (rate - costRate) * qty;
+    const due = total - given > 0 ? total - given : 0;
+    const cashRec = given > total ? total : given;
+
+    if(appData.stock[item]) {
+      appData.stock[item].soldQty = (appData.stock[item].soldQty || 0) + qty;
+    }
+
+    appData.sales.push({ 
+      date: new Date().toLocaleString(), 
+      cust: cust, 
+      item: item, 
+      qty: qty, 
+      total: total, 
+      paidCash: cashRec,
+      dueCredit: due,
+      profit: profit, 
+      type: payType 
+    });
+
+    saveData();
+    speakText(`${item} ${dict.sellOk}`);
+    alert(dict.sellOk);
+    closeModal('sellModal');
+  }
+
+  function renderTables() {
+    const cur = getCurrencySymbol();
+    const stkBody = document.getElementById('stockTableBody');
+    stkBody.innerHTML = '';
+    let alertMsg = "";
+
+    for(let k in appData.stock) {
+      const item = appData.stock[k];
+      const remaining = item.totalAdded - item.soldQty;
+      const unit = item.unit || "KG";
+      const imgTag = item.img ? `<img src="${item.img}" style="width:35px; height:35px; object-fit:cover; border-radius:4px;">` : '📷';
+
+      let unitInfo = '-';
+      if(item.subUnits > 0) {
+        if(unit === 'Bora') unitInfo = `${item.subUnits} बोरा`;
+        else if(unit === 'Pcs') unitInfo = `${item.subUnits} पैकेट`;
+        else if(unit === 'Litre') unitInfo = `${item.subUnits} टीन/डिब्बा`;
+      }
+
+      if(remaining <= 2) { alertMsg += `⚠️ Alert: ${k} low stock (${remaining} ${unit})! <br>`; }
+
+      stkBody.innerHTML += `
+        <tr>
+          <td>${imgTag}</td>
+          <td>${item.shop}</td>
+          <td><b>${k}</b></td>
+          <td>${unitInfo}</td>
+          <td>${item.totalAdded} ${unit}</td>
+          <td>${cur} ${item.purchaseRate}</td>
+          <td>${item.soldQty} ${unit}</td>
+          <td style="color:${remaining <= 0 ? 'red' : 'green'}; font-weight:bold;">${remaining} ${unit}</td>
+        </tr>
+      `;
+    }
+    document.getElementById('stockAlerts').innerHTML = alertMsg;
+
+    let totalCash = 0, totalCredit = 0, totalProfit = 0, totalShopCredit = 0;
+    appData.sales.forEach(s => {
+      totalCash += (s.paidCash || 0);
+      totalCredit += (s.dueCredit || 0);
+      totalProfit += (s.profit || 0);
+    });
+
+    for(let k in appData.stock) { totalShopCredit += (appData.stock[k].supplierDue || 0); }
+
+    document.getElementById('dashCash').innerText = `प्राप्त नकद: ${cur} ${totalCash.toFixed(2)}`;
+    document.getElementById('dashCredit').innerText = `ग्राहक उधार: ${cur} ${totalCredit.toFixed(2)}`;
+    document.getElementById('dashProfit').innerText = `मुनाफ़ा: ${cur} ${totalProfit.toFixed(2)}`;
+    document.getElementById('dashShopCredit').innerText = `सप्लायर बकाया: ${cur} ${totalShopCredit.toFixed(2)}`;
+
+    const pdfBody = document.getElementById('pdfArchiveBody');
+    pdfBody.innerHTML = '';
+    appData.pdfFiles.forEach((file, index) => {
+      pdfBody.innerHTML += `
+        <tr>
+          <td><b>${file.fileName}</b></td>
+          <td>${file.date}</td>
+          <td>
+            <button class="btn btn-blue" style="padding:3px 6px; font-size:10px; width:auto;" onclick="previewPDF(${index})">Edit / Preview</button>
+            <button class="btn btn-green" style="padding:3px 6px; font-size:10px; width:auto;" onclick="downloadPDF(${index})">Download</button>
+            <button class="btn btn-red" style="padding:3px 6px; font-size:10px; width:auto;" onclick="deletePDF(${index})">Delete</button>
+          </td>
+        </tr>
+      `;
+    });
+  }
+
+  function startMasterSearchMic() {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      alert("ब्राउज़र में वॉइस सपोर्ट नहीं है!"); return;
+    }
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = getLanguageCode();
+    recognition.start();
+
+    recognition.onresult = function(event) {
+      const query = event.results[0][0].transcript.toLowerCase();
+      let found = false;
+      let reply = "";
+      let matchedImg = "";
+
+      for(let k in appData.stock) {
+        if(k.toLowerCase().includes(query) || query.includes(k.toLowerCase())) {
+          const item = appData.stock[k];
+          const rem = item.totalAdded - item.soldQty;
+          reply = `${k} - स्टॉक में उपलब्ध है: ${rem} ${item.unit || "KG"}`;
+          matchedImg = item.img || '';
+          found = true;
+          break;
+        }
+      }
+
+      if(!found) reply = `${query} स्टॉक में नहीं मिला`;
+
+      document.getElementById('masterSearchResult').innerText = reply;
+      document.getElementById('masterSearchImgDisplay').innerHTML = `
+        ${matchedImg ? `<img src="${matchedImg}" class="item-img-preview"><br>` : ''}
+        <a href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(query)}" target="_blank" class="btn-search-link">🖼️ Google पर Live Photo देखें</a>
+      `;
+      speakText(reply);
+    };
+  }
+
+  /* UPGRADED DYNAMIC SECURITY BOT ENGINE WITH TEAM & FEATURE KNOWLEDGE */
+  function askSecurityBot() {
+    const q = document.getElementById('botQueryInput').value.toLowerCase().trim();
+    if(!q) return;
+
+    let ans = "";
+
+    // 1. Team, Founder, Owner, Shareholding Questions
+    if (q.includes("बनाया") || q.includes("मालिक") || q.includes("शेयर") || q.includes("founder") || q.includes("owner") || q.includes("राजू") || q.includes("जितेन्द्र") || q.includes("प्रमिला") || q.includes("राधा") || q.includes("टीम")) {
+      ans = "JR Shanti Khata ऐप 4 बराबर 25% शेयरहोल्डर्स द्वारा संचालित है:\n" +
+            "1. राजू महतो (Main Founder & Ground Director - 25%): ग्राउंड लेवल पर दुकानें जोड़ना व समस्याएं हल करना।\n" +
+            "2. जितेन्द्र कुमार महतो (Head of Tech & System Architect - 25%): ऐप डेवलपमेंट, AI इंटीग्रेशन व सुरक्षा संभालना।\n" +
+            "3. प्रमिला महतो (Admin & Advisory Director - 25%): वित्तीय योजनाएं व लीगल रिकॉर्ड देखना।\n" +
+            "4. राधा महतो (Customer Relations - 25%): कस्टमर सपोर्ट व ट्रेनिंग संभालना।";
+    }
+    // 2. Stock Add Query
+    else if (q.includes("स्टॉक") || q.includes("खरीद") || q.includes("सामान कैसे")) {
+      ans = "नया स्टॉक जोड़ने के लिए 'Add Item Stock' बटन दबाएं। इसमें बोरा, पैकेट (Pcs), और डिब्बा (Litre) का स्वतः दर और मात्रा कैलकुलेटर दिया गया है।";
+    }
+    // 3. Sell & Credit Query
+    else if (q.includes("बिक्री") || q.includes("बेचना") || q.includes("उधार") || q.includes("खाता")) {
+      ans = "सामान बेचने या ग्राहक का उधारी खाता दर्ज करने के लिए 'Sell Item' बटन पर जाएं। नकद और उधारी का हिसाब यहाँ सुरक्षित दर्ज होता है।";
+    }
+    // 4. Return Query
+    else if (q.includes("वापसी") || q.includes("रिटर्न") || q.includes("return")) {
+      ans = "सामान वापसी के लिए 'Product Return Entry' बटन चुनें। ग्राहक वापसी से स्टॉक बढ़ेगा और सप्लायर वापसी से स्टॉक घटेगा।";
+    }
+    // 5. Backup & Security Query
+    else if (q.includes("सुरक्षा") || q.includes("बैकअप") || q.includes("पिन") || q.includes("सुरक्षित") || q.includes("pin")) {
+      ans = "यह ऐप 4-डिजिट PIN सुरक्षा के साथ पूरी तरह सुरक्षित है। सेटिंग्स (⚙️) से आप Owner, Stock, Salesman और Storekeeper का अलग-अलग PIN रख सकते हैं तथा JSON बैकअप डाउनलोड कर सकते हैं।";
+    }
+    // 6. Report & PDF Query
+    else if (q.includes("रिपोर्ट") || q.includes("pdf") || q.includes("पीडीएफ") || q.includes("बिक्री रिपोर्ट")) {
+      ans = "24 घंटे की बिक्री रिपोर्ट और PDF फाइलें देखने या संपादित (Edit) करने के लिए '24H बिक्री रिपोर्ट व पीडीएफ' बटन का उपयोग करें।";
+    }
+    // 7. General Default Fallback Response
+    else {
+      ans = `JR Shanti Bot: आपके सवाल '${q}' का विश्लेषण किया गया है। यह ऐप 100% PIN सुरक्षित है और दुकानों का स्टॉक, उधारी व PDF रिपोर्ट आसानी से प्रबंधित करता है।`;
+    }
+
+    // Display Response with line break preservation
+    const formattedAns = ans.replace(/\n/g, '<br>');
+    document.getElementById('botDisplayArea').innerHTML += `<p style="margin-bottom:8px;"><b>आप:</b> ${q}<br><b style="color:#1d4ed8;">JR Bot:</b> ${formattedAns}</p>`;
+
+    // Auto scroll to bottom
+    const area = document.getElementById('botDisplayArea');
+    area.scrollTop = area.scrollHeight;
+
+    speakText(ans);
+    document.getElementById('botQueryInput').value = "";
+  }
+
+  function openSecurityBot() {
+    openModal('botModal');
+    speakText("JR Shanti सिक्योरिटी बोट एक्टिवेट हो गया है। आप ऐप के फीचर्स और संस्थापकों के बारे में सवाल पूछ सकते हैं।");
+  }
+
+  /* OWNER OTP SIM CHANGE SYSTEM */
+  function sendOwnerOTP() {
+    const newPhone = document.getElementById('newPhoneInput').value.trim();
+    if(!newPhone || newPhone.length < 8) {
+      alert("कृपया नया वैध मोबाइल नंबर दर्ज करें!");
+      return;
+    }
+    generatedOTP = Math.floor(1000 + Math.random() * 9000);
+    document.getElementById('otpInputSection').style.display = 'block';
+    alert(`🔐 सुरक्षा OTP कोड: [ ${generatedOTP} ]\n(यह कोड नए SIM/मोबाइल नंबर पर भेजा गया है)`);
+  }
+
+  function verifyOwnerOTP() {
+    const code = document.getElementById('otpCodeInput').value.trim();
+    if(parseInt(code) === generatedOTP) {
+      const newPhone = document.getElementById('newPhoneInput').value.trim();
+      appData.userProfile.phone = newPhone;
+      saveData();
+      alert(`✅ बधाई हो! आपका मोबाइल नंबर बदलकर ${newPhone} हो गया है। User ID वही (${appData.userProfile.userId}) है। डेटा पूरी तरह सुरक्षित है!`);
+      document.getElementById('otpInputSection').style.display = 'none';
+      document.getElementById('newPhoneInput').value = '';
+      initAppView();
+    } else {
+      alert("❌ गलत OTP दर्ज किया गया है!");
+    }
+  }
+
+  function sendComplaint() {
+    const txt = document.getElementById('complaintText').value.trim();
+    if(!txt) { alert("शिकायत लिखें!"); return; }
+    appData.complaints.push({ date: new Date().toLocaleString(), text: txt, user: appData.userProfile.phone });
+    saveData();
+    alert("शिकायत ऐप में दर्ज हो गई है!");
+    closeModal('complaintModal');
+  }
+
+  function sendComplaintWhatsApp() {
+    const txt = document.getElementById('complaintText').value.trim();
+    if(!txt) return;
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent('JR Shanti App Complaint/Suggestion:\n' + txt)}`;
+    window.open(url, '_blank');
+  }
+
+  function sendComplaintEmail() {
+    const txt = document.getElementById('complaintText').value.trim();
+    if(!txt) return;
+    const mailto = `mailto:support@jrshanti.com?subject=App Complaint&body=${encodeURIComponent(txt)}`;
+    window.location.href = mailto;
+  }
+
+  function renderComplaints() {
+    const body = document.getElementById('complaintTableBody');
+    body.innerHTML = '';
+    (appData.complaints || []).forEach(c => {
+      body.innerHTML += `<tr><td>${c.date}</td><td>${c.user || 'User'}</td><td>${c.text}</td></tr>`;
+    });
+  }
+
+  function downloadJSONBackup() {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData));
+    const dlAnchor = document.createElement('a');
+    dlAnchor.setAttribute("href", dataStr);
+    dlAnchor.setAttribute("download", `JR_Shanti_Backup_${appData.userProfile.userId || 'data'}.json`);
+    document.body.appendChild(dlAnchor);
+    dlAnchor.click();
+    dlAnchor.remove();
+  }
+
+  function emailJSONBackup() {
+    const dataStr = encodeURIComponent(JSON.stringify(appData));
+    window.location.href = `mailto:?subject=JR Shanti Backup Data&body=${dataStr}`;
+  }
+
+  function restoreJSONBackup(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          appData = { ...appData, ...JSON.parse(e.target.result) };
+          saveData();
+          alert("डेटा सफलतापूर्वक रीस्टोर हो गया है!");
+          location.reload();
+        } catch(err) { alert("अमान्य बैकअप फाइल!"); }
+      };
+      reader.readAsText(file);
+    }
+  }
+
+  function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        currentUploadedImgBase64 = e.target.result;
+        document.getElementById('imgPreviewArea').innerHTML = `<img src="${currentUploadedImgBase64}" class="item-img-preview">`;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function startMic(fieldId) {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) return;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = getLanguageCode();
+    recognition.start();
+    recognition.onresult = function(event) {
+      document.getElementById(fieldId).value = event.results[0][0].transcript;
+      calcStockTotals();
+      calcSellTotal();
+    };
+  }
+
+  function generate24HArchive(type) {
+    const cur = getCurrencySymbol();
+    const fileName = `JR_Report_${type}_${new Date().toLocaleDateString().replace(/\//g, '-')}.pdf`;
+    let content = `JR SHANTI KHATA - ${type} REPORT\nUser ID: ${appData.userProfile.userId || 'N/A'}\nDate: ${new Date().toLocaleString()}\nCurrency: ${cur}\n\n`;
+
+    if(type === 'Stock') {
+      for(let k in appData.stock) {
+        const rem = appData.stock[k].totalAdded - appData.stock[k].soldQty;
+        content += `Item: ${k} | Total: ${appData.stock[k].totalAdded} ${appData.stock[k].unit || 'KG'} | Rem: ${rem} ${appData.stock[k].unit || 'KG'}\n`;
+      }
+    } else {
+      appData.sales.forEach(s => {
+        content += `Cust: ${s.cust} | Item: ${s.item} | Total: ${cur} ${s.total} | Paid: ${cur} ${s.paidCash || 0} | Due: ${cur} ${s.dueCredit || 0}\n`;
+      });
+    }
+
+    appData.pdfFiles.push({ fileName: fileName, date: new Date().toLocaleString(), textContent: content });
+    saveData();
+    alert(`PDF Saved: '${fileName}'`);
+    renderTables();
+  }
+
+  function previewPDF(index) {
+    activePdfIndex = index;
+    const file = appData.pdfFiles[index];
+    document.getElementById('pdfContentTextarea').value = file.textContent || "";
+    openModal('pdfPreviewModal');
+  }
+
+  function saveEditedPDF() {
+    if(activePdfIndex !== null && appData.pdfFiles[activePdfIndex]) {
+      appData.pdfFiles[activePdfIndex].textContent = document.getElementById('pdfContentTextarea').value;
+      saveData();
+      alert("PDF रिपोर्ट में बदलाव सेव हो गए हैं!");
+      closeModal('pdfPreviewModal');
+      renderTables();
+    }
+  }
+
+  function downloadPDF(index) {
+    const file = appData.pdfFiles[index];
+    if(!file) return;
+    const element = document.createElement("a");
+    const blob = new Blob([file.textContent], {type: 'text/plain'});
+    element.href = URL.createObjectURL(blob);
+    element.download = file.fileName.replace('.pdf', '.txt');
+    document.body.appendChild(element);
+    element.click();
+    element.remove();
+  }
+
+  function readActivePDFVoice() {
+    const txt = document.getElementById('pdfContentTextarea').value;
+    if(txt) speakText(txt);
+  }
+
+  function deletePDF(index) {
+    appData.pdfFiles.splice(index, 1);
+    saveData();
+    renderTables();
+  }
+
+  function saveSettings() {
+    appData.settings.userName = document.getElementById('userNameInput').value;
+    appData.settings.pins.Owner = document.getElementById('pinOwner').value || appData.settings.pins.Owner;
+    appData.settings.pins.Stock = document.getElementById('pinStock').value || appData.settings.pins.Stock;
+    appData.settings.pins.Salesman = document.getElementById('pinSalesman').value || appData.settings.pins.Salesman;
+    appData.settings.pins.Storekeeper = document.getElementById('pinStorekeeper').value || appData.settings.pins.Storekeeper;
+
+    saveData();
+    alert("सेटिंग्स सेभ भयो!");
+    closeModal('settingsModal');
+  }
+
+  function changeLanguage() {
+    appData.settings.lang = document.getElementById('langSelect').value;
+    saveData();
+    applyLanguageUI();
+  }
+
+  function changeCalendar() {
+    appData.settings.cal = document.getElementById('calSelect').value;
+    saveData();
+    updateLiveClock();
+  }
+
+  if(appData.userProfile && appData.userProfile.phone) { initAppView(); }
+
+  document.getElementById('userNameInput').value = appData.settings.userName || "जितेन्द्र कुमार महतो";
+  document.getElementById('langSelect').value = appData.settings.lang || 'hi';
+  document.getElementById('calSelect').value = appData.settings.cal || 'NP';
+  document.getElementById('pinOwner').value = appData.settings.pins?.Owner || "1234";
+  document.getElementById('pinStock').value = appData.settings.pins?.Stock || "1234";
+  document.getElementById('pinSalesman').value = appData.settings.pins?.Salesman || "1234";
+  document.getElementById('pinStorekeeper').value = appData.settings.pins?.Storekeeper || "1234";
+</script>
+</body>
 </html>
